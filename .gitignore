@@ -1,0 +1,5 @@
+# Ignore the entire build directory
+build/
+
+.vscode/
+.history/

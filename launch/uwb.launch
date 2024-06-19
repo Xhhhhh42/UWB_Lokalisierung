@@ -1,0 +1,21 @@
+<launch>
+    <arg name="max_vel" value="2.0" />
+    <arg name="max_acc" value="1.0" />
+
+    <node pkg="nlink_parser" type="linktrack_aoa" name="linktrack_aoa0" output="screen">
+        <param name="port_name" value="/dev/ttyCH343USB0" />
+        <param name="baud_rate" value="921600" />
+    </node>
+
+    <!-- <arg name="bag_file" default="$(find scoutair_planner)/bag/layer_2024-06-12-02-50-12.bag"/> -->
+
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find uwb_signal_processing)/config/uwb.rviz" output="screen"/>
+
+    <!-- Play the rosbag file -->
+    <!-- <node name="rosbag_play" pkg="rosbag" type="play" args="$(arg bag_file)" output="screen"/> -->
+
+    <node name="uwb_signal_processing" pkg="uwb_signal_processing" type="uwb_filter_node" output="screen">
+        <param name="uwb/max_velocity" value="$(arg max_vel)" type="double"/>
+        <param name="uwb/kAlpha" value="0.75" type="double"/>
+    </node>
+</launch>
